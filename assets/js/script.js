@@ -1,19 +1,11 @@
 //GLOBAL VARIABLES//
+
+//query selectors
 var dataContainerEl = document.querySelector("main"); //replace main with proper location
 
+//start and end time
 var startTime = 6;
 var endTime = 24;
-var date = "monday";
-
-
-//FUNCTIONS//
-var denullify = function(data) {
-    if (data === null) {
-        return "";
-    } else {
-        return data;
-    }
-};
 
 var defaultList = function() {
     var list = [];
@@ -27,9 +19,43 @@ var defaultList = function() {
     return list;
 };
 
+//sets a default data for use later (DO NOT MODIFY)
+var defaultData = {sunday: defaultList(), monday: defaultList(), tuesday: defaultList(), wednesday: defaultList(), thursday: defaultList(), friday: defaultList(), saturday: defaultList()};
+
+//current dataset (MODIFY THIS)
+var data = defaultData;
+
+
+var date = moment().format("dddd").toLowerCase();
+
+//FUNCTIONS//
+var denullify = function(data) {
+    if (data === null) {
+        return "";
+    } else {
+        return data;
+    }
+};
+
+var saveData = function() {
+    if (data === null) {
+        data = defaultData;
+    }
+    localStorage.setItem("data",JSON.stringify(data));
+    loadTimesChart();
+}
+
+var loadData = function() {
+    data = JSON.parse(localStorage.getItem("data"));
+    if (data === null) {
+        data = defaultData;
+    }
+    return data;
+}
+
 var loadTimesChart = function() {
     //set the current dataset
-    var data = {monday: defaultList(), tuesday: ["do something", null, "do something"]};
+    data = loadData();
     var dataToday = data[date];
     //set the starting time
     var currentTime = moment().day(date).hour(6).minute(0).second(0);
