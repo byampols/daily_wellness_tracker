@@ -20,6 +20,7 @@ header h1 {
 
 main {
     text-align: left;
+ 
 }
 
 section {
@@ -241,3 +242,22 @@ i.fa-swimmer {
 
 .future_time {
     background-color: lightblue;
+}
+
+.dateContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.forwardDate{
+    color: black !important;
+}
+.rowToday{
+    display: flex;
+    justify-content: center;
+}
+.saveBtn{
+    background-color: lightpink;
+}
