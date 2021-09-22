@@ -50,7 +50,6 @@
                             <input type="text" name="Time-001">
                         </p>
                         <i class="fas fa-utensils circle-icon"></i>
-                        <button class="btn-remove">×</button>
                     </div>
                     <div class="daily-schedule-item">
                         <h2>Workout</h2>
@@ -58,19 +57,17 @@
                             <input type="text" name="Time-002">
                         </p>
                         <i class="fas fa-swimmer circle-icon"></i>
-                        <button class="btn-remove">×</button>
                     </div>
                     <div class="daily-schedule-item">
                         <h2>Rest</h2>
-                        <p><label for="Time-002">Time: </label>
-                            <input type="text" name="Time-002">
+                        <p><label for="Time-003">Time: </label>
+                            <input type="text" name="Time-003">
                         </p>
                         <i class="fas fa-bed circle-icon"></i>
-                        <button class="btn-remove">×</button>
                     </div>
                 </div>
-                <button id="btn-share">Save</button>
-                <button id="btn-reset">Reset</button>
+                <button id="submit-top">Save</button>
+                <button id="reset-top">Reset</button>
             </div>
         </div>
 
@@ -85,115 +82,12 @@
                 <button id="resetDate">Today</button>
             </div>
             <h2> Time Schedule </h2>
-
-            <div id="hour-8" class="row">
-                <div class="col-md-1 hour">
-                    8:00am
-                </div>
-                <textarea class="col-md-11" id='hour8' time=8></textarea>
-                
-            </div>
-
-
-            <div id="hour-9" class="row">
-                <div class="col-sm-1 hour">
-                    9:00am
-                </div>
-                <textarea class="col-sm-11" id='hour9' time=9></textarea>
-                
-            </div>
-
-            <div id="hour-10" class="row">
-                <div class="col-sm-1 hour">
-                    10:00am
-                </div>
-                <textarea class="col-sm-11" id='hour10' time=10></textarea>
-                
-            </div>
-
-            <div id="hour-11" class="row">
-                <div class="col-sm-1 hour">
-                    11:00am
-                </div>
-                <textarea class="col-sm-11" id='hour11' time=11></textarea>
-                
-            </div>
-
-            <div id="hour-12" class="row">
-                <div class="col-sm-1 hour">
-                    12:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour12' time=12></textarea>
-                
-            </div>
-
-            <div id="hour-13" class="row">
-                <div class="col-sm-1 hour">
-                    1:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour13' time=13></textarea>
-                
-            </div>
-
-            <div id="hour-14" class="row">
-                <div class="col-sm-1 hour">
-                    2:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour14' time=14></textarea>
-                
-            </div>
-
-            <div id="hour-15" class="row">
-                <div class="col-sm-1 hour">
-                    3:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour15' time=15></textarea>
-                
-            </div>
-
-            <div id="hour-16" class="row">
-                <div class="col-sm-1 hour">
-                    4:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour16' time=16></textarea>
-                
-            </div>
-
-            <div id="hour-17" class="row">
-                <div class="col-sm-1 hour">
-                    5:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour17' time=17></textarea>
-                
-            </div>
-
-            <div id="hour-18" class="row">
-                <div class="col-sm-1 hour">
-                    6:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour18' time=18></textarea>
-                
-            </div>
-
-            <div id="hour-19" class="row">
-                <div class="col-sm-1 hour">
-                    7:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour19' time=19></textarea>
-                
-            </div>
-
-            <div id="hour-20" class="row">
-                <div class="col-sm-1 hour">
-                    8:00pm
-                </div>
-                <textarea class="col-sm-11" id='hour20' time=20></textarea>
-                
-            </div>
+            <div id = "time-blocks"></div>
         </div>
+
         <div class = "has-text-centered">
-            <button id="submit">Save</button>
-            <button id="reset">Reset</button>
+            <button id="submit-bottom">Save</button>
+            <button id="reset-bottom">Reset</button>
         </div>
 
     </main>
