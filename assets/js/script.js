@@ -2,6 +2,9 @@
 
 //query selectors
 var dataContainerEl = document.querySelector("main"); //replace main with proper location
+var searchedLocationEl = document.querySelector("#searched-location");
+var locationContainerEl = document.querySelector("#location-container");
+var weather = document.getElementById("weather");
 
 //start and end time
 var startTime = 6;
@@ -43,6 +46,51 @@ var denullify = function(data) {
         return data;
     }
 };
+
+function getWeather() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+       alert("Weather feature not supported!"); // stuck here on the alert as this isn't showing
+    }
+  }
+  
+  function showPosition(position) {
+  
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+  
+      fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +"&lon=" + lon + "&units=imperial&exclude=minutely,hourly,alert&appid=0899cac729532b722cf5a83da4e0e7f9")
+  
+      .then(function(response) {
+          return response.json();
+  })
+      .then(function(response) {
+          // pass response into dom function
+  
+          // current day weather
+          var todayCondition = document.createElement("h4");
+          todayCondition.textContent = "Condition: " + response.daily[0].weather[0].description
+          locationContainerEl.appendChild(todayCondition);
+  
+          var todayTemp = document.createElement("h4"); 
+          todayTemp.textContent = "Temperature: " + response.daily[0].temp.day
+          locationContainerEl.appendChild(todayTemp);
+  
+          var todayWind = document.createElement("h4");
+          todayWind.textContent = "Wind: " + response.daily[0].wind_speed + " MPH";
+          locationContainerEl.appendChild(todayWind);
+  
+          var todayHumidity = document.createElement("h4");
+          todayHumidity.textContent = "Humidity: " + response.daily[0].humidity + "%";
+          locationContainerEl.appendChild(todayHumidity);
+  
+          var todayUVIndex = document.createElement("h4");
+          todayUVIndex.textContent = "UV Index: " + response.daily[0].uvi;
+          locationContainerEl.appendChild(todayUVIndex);
+      
+      });
+  };
 
 var saveData = function() {
     if (data === null) {
@@ -161,10 +209,5 @@ for (let i = 0; i < saveBtns.length; i++) {
     
 }
 //TIMED FUNCTION CALLS//
-
-
-
-
-
 
 
