@@ -1,19 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Document</title>
+    <title>Daily Schedule Generator</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href="normalize.css" rel="stylesheet" type="text/css">
+    <link href="./assets/css/style.css" rel="stylesheet" type="text/css">
 </head>
+
 <body>
-    <header></header>
 
-    <main></main>
+    <header class="page-header">
+        <h1>Daily Wellness Tracker</h1>
+        <h2>A calendar for planning your schedule</h2>
+        <p class='today'></p>
+    </header>
 
-    <footer></footer>
+    <main>
+        <div id="daily-schedule">
+            <h1>Today's Plan</h1>
+            <p>2021-2022</p>
+            <!--Year-->
+            <div class="daily-schedule-list">
+                <div class="daily-schedule-item">
+                    <h2>Meals</h2>
+                    <p><label for="Time-001">Calories: </label>
+                        <input type="text" name="Time-001">
+                    </p>
+                    <i class="fas fa-utensils circle-icon"></i>
+                    <button class="btn-remove">×</button>
+                </div>
+                <div class="daily-schedule-item">
+                    <h2>Workout</h2>
+                    <p><label for="Time-002">Cals Burned: </label>
+                        <input type="text" name="Time-002">
+                    </p>
+                    <i class="fas fa-swimmer circle-icon"></i>
+                    <button class="btn-remove">×</button>
+                </div>
+                <div class="daily-schedule-item">
+                    <h2>Rest</h2>
+                    <p><label for="Time-002">Time: </label>
+                        <input type="text" name="Time-002">
+                    </p>
+                    <i class="fas fa-bed circle-icon"></i>
+                    <button class="btn-remove">×</button>
+                </div>
+            </div>
+            <button id="btn-share">Share</button>
+            <button id="btn-reset">Reset</button>
+
+        </div>
+
+        <section id="Notes">
+            <h1>Notes</h1>
+            <form>
+                <p>
+                    <label for="Goals">Goals: </label><input type="text">
+                </p>
+
+                <p>
+                    <label for="selectDate">Choose a date: </label>
+                    <input type="text" name="selectDate">
+                </p>
+
+                <p>
+                    <label for="selectDate">Reflection: </label>
+                    <input type="text" name="selectColour">
+                </p>
+            </form>
+        </section>
+
+        <section id="activity-list">
+            <h1> List of Daily Events </h1>
+            </article>
+            <article class="activity-item">
+                <i class="fas fa-shower circle-icon"></i>
+                <h2>Weather</h2>
+                <button class="btn-add">+ Check</button>
+            </article>
+            <article class="activity-item">
+                <i class="fas fa-bed circle-icon"></i>
+                <h2>Sleep</h2>
+                <button class="btn-add">+ Check</button>
+            </article>
+            <article class="activity-item">
+                <i class="fas fa-swimmer circle-icon"></i>
+                <h2>Excercise</h2>
+                <button class="btn-add">+ Check</button>
+            </article>
+        </section>
+
+        <div class="container">
+            <!-- Hr Timeblocks, requires more editing -->
+            <div class="dateContainer">
+                <button id="backDate" class="backDate"><i class="fas fa-angle-double-left"></i></button>
+                <h1 id="date"></h1>
+                <button id="forwardDate" class="forwardDate"><i class="fas fa-angle-double-right"></i></button>
+            </div>
+            <div class="rowToday">
+                <button id="resetDate">Today</button>
+            </div>
+            <h2> Time Schedule </h2>
+
+            <div id="hour-8" class="row">
+                <div class="col-md-1 hour">
+                    8:00am
+                </div>
+                <textarea class="col-md-10" id='hour8' time=8></textarea>
+                <button class="saveBtn col-md-1  btn"><i class="fas fa-save"></i></button>
+            </div>
+
+
+            <div id="hour-9" class="row">
+                <div class="col-sm-1 hour">
+                    9:00am
+                </div>
+                <textarea class="col-sm-10" id='hour9' time=9></textarea>
+                <button class="saveBtn col-md-1  btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-10" class="row">
+                <div class="col-sm-1 hour">
+                    10:00am
+                </div>
+                <textarea class="col-sm-10" id='hour10' time=10></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-11" class="row">
+                <div class="col-sm-1 hour">
+                    11:00am
+                </div>
+                <textarea class="col-sm-10" id='hour11' time=11></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-12" class="row">
+                <div class="col-sm-1 hour">
+                    12:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour12' time=12></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-13" class="row">
+                <div class="col-sm-1 hour">
+                    1:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour13' time=13></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-14" class="row">
+                <div class="col-sm-1 hour">
+                    2:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour14' time=14></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-15" class="row">
+                <div class="col-sm-1 hour">
+                    3:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour15' time=15></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-16" class="row">
+                <div class="col-sm-1 hour">
+                    4:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour16' time=16></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-17" class="row">
+                <div class="col-sm-1 hour">
+                    5:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour17' time=17></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-18" class="row">
+                <div class="col-sm-1 hour">
+                    6:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour18' time=18></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-19" class="row">
+                <div class="col-sm-1 hour">
+                    7:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour19' time=19></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+            <div id="hour-20" class="row">
+                <div class="col-sm-1 hour">
+                    8:00pm
+                </div>
+                <textarea class="col-sm-10" id='hour20' time=20></textarea>
+                <button class="saveBtn col-md-1 btn"><i class="fas fa-save"></i></button>
+            </div>
+
+    </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
