@@ -10,31 +10,21 @@
 <body>
     <header></header>
 
-    <main></main>
+    <main>
 
         <!--Added container + button for Location Search-->
         <div class="container">
-            <div class="row">
-                <div class="col border-bottom">
-                    <div>
-                        <h3 class=>Search for your location:</h3>
-                        <form id="user-form">
-                        <input name="location-search" id="location-search" type="text" autofocus="true"/>
-                        <br>
-                        <button type="submit" class="btn">Search</button>
-                        </form>
-                    </div>
+            <p>Click the button to get your location's weather.</p>
+            <p id="weather"></p>
+            <button onclick="getWeather()">Get Weather</button>
+        
+            <!-- Added container for dynamic html to be added upon search-->
+            <div class="container">
+                <div id="location-container">
                 </div>
             </div>
-        </div> 
-        <!--Added container for dynamic html to be added upon search-->
-        <div class="col-8 border">
-            <div class="current-day"></div>
-              <h2>Showing Weather for: <span id="searched-location"></span></h2>
-              <div id="location-container">
-              </div>
-            </div>
-
+        </div>
+    </main>
     <footer></footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>

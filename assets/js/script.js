@@ -1,91 +1,57 @@
 //GLOBAL VARIABLES//
 
 // weather search global variables
-var userFormEl = document.querySelector("#user-form");
-var locationSearchInputEl = document.querySelector("#location-search")
 var searchedLocationEl = document.querySelector("#searched-location");
 var locationContainerEl = document.querySelector("#location-container");
+var weather = document.getElementById("weather");
 
-
-// Search Form Submit
-var formSubmitHandler = function(event) {
-    event.preventDefault();
-
-    // get value from search input element
-    var location = locationSearchInputEl.value.trim();
-
-    if (location) {
-        getLocationWeather(location);
-        locationSearchInputEl = "";
-    };
-};
-
-// display location after submitting location
-var displayLocation = function (location) {
-    // console.log(location);
-
-    // clear old content
-    locationContainerEl.textContent = "";
-    searchedLocationEl.textContent = location;
-
+function getWeather() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+     alert("Weather feature not supported!"); // stuck here on the alert as this isn't showing
+  }
 }
 
-// fetch weather via searched location
-var getLocationWeather = function(location) {
-    // format the OpenWeather Geocoding API URL 
-    var geocodingApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + location + "&limit=5&appid=0899cac729532b722cf5a83da4e0e7f9"
-    
-    // make a request to the OpenWeather Geocoding API URL
-    fetch(geocodingApiUrl)
-        .then(function(response) {
+function showPosition(position) {
+
+  var lat = position.coords.latitude;
+  var lon = position.coords.longitude;
+
+//   console.log(lat);
+//   console.log(lon);
+
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +"&lon=" + lon + "&units=imperial&exclude=minutely,hourly,alert&appid=0899cac729532b722cf5a83da4e0e7f9")
+
+    .then(function(response) {
         return response.json();
-        })   
-        .then(function(response) {
-            displayLocation(location)
+})
+    .then(function(response) {
+        // pass response into dom function
 
-            // get lat + lon values for location
-            var lat = response[0].lat
-            var lon = response[0].lon
+        // current day weather
+        var todayCondition = document.createElement("h4");
+        todayCondition.textContent = "Condition: " + response.daily[0].weather[0].description
+        locationContainerEl.appendChild(todayCondition);
+
+        var todayTemp = document.createElement("h4"); 
+        todayTemp.textContent = "Temperature: " + response.daily[0].temp.day
+        locationContainerEl.appendChild(todayTemp);
+
+        var todayWind = document.createElement("h4");
+        todayWind.textContent = "Wind: " + response.daily[0].wind_speed + " MPH";
+        locationContainerEl.appendChild(todayWind);
+
+        var todayHumidity = document.createElement("h4");
+        todayHumidity.textContent = "Humidity: " + response.daily[0].humidity + "%";
+        locationContainerEl.appendChild(todayHumidity);
+
+        var todayUVIndex = document.createElement("h4");
+        todayUVIndex.textContent = "UV Index: " + response.daily[0].uvi;
+        locationContainerEl.appendChild(todayUVIndex);
     
-            // console.log(lat);
-            // console.log(lon);       
-            
-            // make the request to the OpenWeather OneCall API URL inputting lat + long values
-            return fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat +"&lon=" + lon + "&units=imperial&exclude=minutely,hourly,alert&appid=0899cac729532b722cf5a83da4e0e7f9");
-
-        })
-        .then(function(response) {
-            return response.json();
-    })
-        .then(function(response) {
-            // pass response into dom function
-
-            // current day weather
-            var todayCondition = document.createElement("h4");
-            todayCondition.textContent = "Condition: " + response.daily[0].weather[0].description
-            locationContainerEl.appendChild(todayCondition);
-
-            var todayTemp = document.createElement("h4"); 
-            todayTemp.textContent = "Temperature: " + response.daily[0].temp.day
-            locationContainerEl.appendChild(todayTemp);
-
-            var todayWind = document.createElement("h4");
-            todayWind.textContent = "Wind: " + response.daily[0].wind_speed + " MPH";
-            locationContainerEl.appendChild(todayWind);
-
-            var todayHumidity = document.createElement("h4");
-            todayHumidity.textContent = "Humidity: " + response.daily[0].humidity + "%";
-            locationContainerEl.appendChild(todayHumidity);
-
-            var todayUVIndex = document.createElement("h4");
-            todayUVIndex.textContent = "UV Index: " + response.daily[0].uvi;
-            locationContainerEl.appendChild(todayUVIndex);
-        
-        });
+    });
 };
-
-userFormEl.addEventListener("submit", formSubmitHandler);
-
 
 
 
