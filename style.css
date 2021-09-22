@@ -131,21 +131,45 @@ button.btn-remove {
     padding: 0;
 }
 
-button#btn-share,
+
 button#btn-reset {
     font-size: 1.4rem!important; 
     width: 100px;
     padding: 5px 15px;
     margin: 5px 5px 30px;
     border: 0;
+    background-color: #999;
 }
-button#btn-share {
+
+button#btn-share{
+    font-size: 1.4rem!important; 
+    width: 100px;
+    padding: 5px 15px;
+    margin: 5px 5px 30px;
+    border: 0;
     background-color: orange;
     color: white;
 }
 
-button#btn-reset {
+
+#submit{
+    font-size: 1.4rem!important; 
+    width: 100px;
+    padding: 5px 15px;
+    margin: 5px 5px 30px;
+    border: 0;
+    background-color: orange;
+    color: white;
+}
+
+#reset{
+    font-size: 1.4rem!important; 
+    width: 100px;
+    padding: 5px 15px;
+    margin: 5px 5px 30px;
+    border: 0;
     background-color: #999;
+    color: white;
 }
 
 /* font-awesome */
@@ -258,6 +282,4 @@ i.fa-swimmer {
     display: flex;
     justify-content: center;
 }
-.saveBtn{
-    background-color: lightpink;
-}
+
