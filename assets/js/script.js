@@ -23,7 +23,7 @@ var resetBottom = document.getElementById("reset-bottom");
 //locations for getting weather
 var searchedLocationEl = document.querySelector("#searched-location");
 var locationContainerEl = document.querySelector("#location-container");
-var weather = document.getElementById("weather");
+var noWeather = document.getElementById("no-weather");
 
 //start and end time
 var startTime = 6;
@@ -68,15 +68,15 @@ var denullify = function(data) {
     }
 };
 
+// get location's current weather
 function getWeather() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-       alert("Weather feature not supported!"); // stuck here on the alert as this isn't showing
-    }
-  }
-  
-  function showPosition(position) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } 
+};
+
+// pass lat/long from getWeather function to fetch request
+function showPosition(position) {
   
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
@@ -85,7 +85,7 @@ function getWeather() {
   
       .then(function(response) {
           return response.json();
-  })
+    })
       .then(function(response) {
           // pass response into dom function
   
@@ -111,7 +111,47 @@ function getWeather() {
           locationContainerEl.appendChild(todayUVIndex);
       
       });
-  };
+};
+
+// show error if denial of geolocation request, or other errors
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            noWeather.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            noWeather.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            noWeather.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            noWeather.innerHTML = "An unknown error occurred."
+            break;
+    }
+};
+
+function previousDayWeather () {
+    if (todayDate > currentDate)
+        noWeather.innerHTML = "";
+        locationContainerEl.innerHTML = "";
+        noWeather.innerHTML = "Previous days' weather is not available"
+};
+
+
+function currentDayWeather () {
+    if (todayDate = currentDate)
+        noWeather.innerHTML = "";
+        locationContainerEl.innerHMTL = "";
+        getWeather();
+}
+
+function forecast () {
+    if (todayDate < currentDate) 
+        noWeather.innerHTML = "";
+        locationContainerEl.innerHMTL = "";    
+        noWeather.innerHTML = "The forecast for tomorrow is:";
+};
 
 //saves current dataset to localstorage
 var saveData = function() {
@@ -208,6 +248,7 @@ function addToDate(){
 
     loadTimesChart();
     loadTodaysPlan();
+    forecast();
 }
 
 //subtracts 1 day from currentDate
@@ -220,6 +261,7 @@ function subFromDate(){
 
     loadTimesChart();
     loadTodaysPlan();
+    previousDayWeather();
 }
 
 //sets currentDate to today
@@ -232,6 +274,7 @@ function todayDate(){
 
     loadTimesChart();
     loadTodaysPlan();
+    currentDayWeather();
 }
 
 //saves all current data to data object, then saves to local storage
