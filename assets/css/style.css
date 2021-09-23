@@ -72,6 +72,13 @@ button:hover {
     cursor: pointer;
 }
 
+#weather-box {
+    width: 55%;
+    height: 20%;
+    float: left;
+    background-color: #eee;
+    text-align: center;
+}
 
 #daily-schedule {
     width: 40%;
