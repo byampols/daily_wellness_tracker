@@ -213,7 +213,7 @@ var loadTimesChart = function() {
     //reset html
     dataContainerEl.innerHTML = "";
     //set the starting time
-    var currentTime = moment().day(date).hour(6).minute(0).second(0);
+    var currentTime = moment().date(date).hour(startTime).minute(0).second(0);
     //loop through length and create timeslots
     for (i = 0; i < dataToday.length; i++) {
         //acquire data to display
@@ -230,8 +230,21 @@ var loadTimesChart = function() {
 
         //class elements
         timeSlot.classList = "row";
-        timeBox.classList = "col-sm-1 hour";
-        textBox.classList = "col-sm-11";
+        timeBox.classList = "col-sm-1 hour rounded-pill my-4";
+        textBox.classList = "col-sm-11 textarea";
+
+        //apply color based on time
+        var difference = currentTime.diff(moment(), "seconds");
+        if (difference > -1800 && difference < 0) {
+            $(timeBox).addClass("current_time");
+            $(textBox).addClass("is-success");
+        } else if (difference < -1800) {
+            $(timeBox).addClass("past_time");
+            $(textBox).addClass("is-danger");
+        } else if (difference > 0) {
+            $(timeBox).addClass("future_time");
+            $(textBox).addClass("is-info");
+        }
 
         //add text to elements
         timeBox.textContent = time;
