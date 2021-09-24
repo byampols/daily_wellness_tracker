@@ -1,5 +1,8 @@
 //GLOBAL VARIABLES//
 
+//gif search terms
+var searchTerms = ["motivation", "motivational", "workout", "awesome", "strength", "positivity", "hard_work", "you're_great", "forward", "excitement", "fitness", "badass"];
+
 //query selectors
 var dataContainerEl = document.querySelector("#time-blocks");
 var dateContainer = document.getElementById('date');
@@ -68,6 +71,24 @@ var denullify = function(data) {
     }
 };
 
+//function get gif to display
+var getGif = function() {
+    var index = Math.floor(Math.random()*searchTerms.length);
+    var search = searchTerms[index];
+    var apiUrl = `https://api.giphy.com/v1/gifs/search?q=${search}&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1`;
+    fetch(apiUrl).then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        var gifContainerEl = document.getElementById("gif");
+        gifContainerEl.innerHTML = "";
+
+        var image = document.createElement("img");
+        image.setAttribute('src', response.data[0].images.fixed_height.url);
+        gifContainerEl.appendChild(image);
+      });
+};
+
 // get location's current weather
 function getWeather() {
 
@@ -113,8 +134,6 @@ function showPosition(position) {
     })
       .then(function(response) {
           // pass response into dom function
-          console.log(dateToday)
-        
           
           // current day weather
           var todayCondition = document.createElement("h4");
@@ -253,9 +272,6 @@ function addToDate(){
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
 
-    var dateToday = currentDate.diff(moment(), "days")
-    // console.log(dateToday)
-
     loadTimesChart();
     loadTodaysPlan();
     getWeather();
@@ -268,9 +284,6 @@ function subFromDate(){
     currentDate = moment(currentDate).startOf("date").add(-1,'days');
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
-
-    var dateToday = currentDate.diff(moment(), "days")
-    // console.log(dateToday)
 
     loadTimesChart();
     loadTodaysPlan();
@@ -285,9 +298,6 @@ function todayDate(){
     currentDate = moment().startOf("date");
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
-
-    var dateToday = currentDate.diff(moment(), "days")
-    // console.log(dateToday)
 
     loadTimesChart();
     loadTodaysPlan();
@@ -336,6 +346,7 @@ var reset = function() {
 //INITIAL FUNCTION CALLS//
 loadTimesChart();
 loadTodaysPlan();
+getGif();
 
 //EVENT LISTNERS//
 forwardBtn.onclick = addToDate;
