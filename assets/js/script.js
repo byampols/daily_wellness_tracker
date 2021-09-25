@@ -338,6 +338,7 @@ var save = function() {
         data[date].timeSlots[i] = text;
     }
     saveData();
+    alert('Changes Saved!')
 };
 
 //resets currentDate's data set
@@ -354,6 +355,7 @@ var reset = function() {
     saveData();
     loadTimesChart();
     loadTodaysPlan();
+    alert('Data Reset')
 };
 
 //INITIAL FUNCTION CALLS//

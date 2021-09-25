@@ -12,7 +12,7 @@ The Daily Wellness Tracker is an app that allows users to create a daily and hou
 
 Source: [github repository](https://github.com/maxwillner/daily_wellness_tracker).
 
-Deployed application: [the deployed application](https://maxwillner.github.io/daily_wellness_tracker/).
+Deployed application: [the deployed application]('https://maxwillner.github.io/daily_wellness_tracker/').
 
 ## Usage 
 
