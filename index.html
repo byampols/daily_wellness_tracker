@@ -28,7 +28,7 @@
                 <!--Added container + button for Location Search-->
                 <div class="container">
                     <p>Click the button to get your location's weather.</p>
-                    <button onclick="getWeather()">Get Weather</button>
+                    <button onclick="getWeather()" class = "button mt-4 is-success">Get Weather</button>
                     <p id="no-weather"></p>
                 
                     <!-- Added container for dynamic html to be added upon search-->
@@ -68,28 +68,30 @@
                         <i class="fas fa-bed circle-icon"></i>
                     </div>
                 </div>
-                <button id="submit-top">Save</button>
-                <button id="reset-top">Reset</button>
+                <div class = "top-buttons">
+                    <button id="submit-top" class = "button is-primary is-medium">Save</button>
+                    <button id="reset-top" class = "button is-danger is-medium">Reset</button>
+                </div>
             </div>
         </div>
 
         <div class="container">
             <!-- Hr Timeblocks, requires more editing -->
-            <div class="dateContainer">
-                <button id="backDate" class="backDate"><i class="fas fa-angle-double-left"></i></button>
+            <div class="dateContainer mt-5">
+                <button id="backDate" class="backDate button is-link"><i class="fas fa-angle-double-left"></i></button>
                 <h1 id="date"></h1>
-                <button id="forwardDate" class="forwardDate"><i class="fas fa-angle-double-right"></i></button>
+                <button id="forwardDate" class="forwardDate button is-link"><i class="fas fa-angle-double-right"></i></button>
             </div>
             <div class="rowToday">
-                <button id="resetDate">Today</button>
+                <button id="resetDate" class = "button is-link mt-5">Today</button>
             </div>
-            <h2> Time Schedule </h2>
+            <h2 id="time-title" class="mt-4"> Time Schedule </h2>
             <div id = "time-blocks"></div>
         </div>
 
         <div class = "has-text-centered">
-            <button id="submit-bottom">Save</button>
-            <button id="reset-bottom">Reset</button>
+            <button id="submit-bottom" class = "button is-primary mt-4 is-medium">Save</button>
+            <button id="reset-bottom" class = "button is-danger mt-4 is-medium">Reset</button>
         </div>
 
     </main>

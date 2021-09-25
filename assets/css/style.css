@@ -88,6 +88,15 @@ button:hover {
     text-align: center;
 }
 
+#daily-schedule h1, #daily-schedule p, #weather-box p {
+    font-size: larger;
+}
+
+#weather-box h4 {
+    margin-top: .5rem;
+    font-weight: bold;
+}
+
 .daily-schedule-list {
     width: 90%;
     display: inline-block;
@@ -157,7 +166,6 @@ button#btn-share{
     background-color: orange;
     color: white;
 }
-
 
 #submit{
     font-size: 1.4rem!important; 
@@ -261,6 +269,7 @@ i.fa-swimmer {
     text-align: center;
     color:white;
     background-color: grey;
+    font-size: xx-large;
 }
 
 .past_time {
@@ -279,7 +288,15 @@ i.fa-swimmer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
 
+#time-title {
+    text-align: start;
+    font-size: x-large;
+    font-style: italic;
 }
 
 .forwardDate{
