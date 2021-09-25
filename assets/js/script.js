@@ -103,7 +103,7 @@ function getWeather() {
 // pass lat/long from getWeather function to fetch request
 function showPosition(position) {
 
-    var dateToday = currentDate.diff(moment().startOf("date"), "days")
+    var dateToday = currentDate.diff(moment().startOf("date"), "days");
 
     
 
@@ -111,7 +111,7 @@ function showPosition(position) {
     if (dateToday < 0) {
         noWeather.innerHTML = "";
         locationContainerEl.innerHTML = "";
-        noWeather.innerHTML = "Previous days' weather is not available"
+        noWeather.innerHTML = "Previous days' weather is not available";
         return;
 
     // if difference is beyond forecast limit, don't make API call    
@@ -119,7 +119,7 @@ function showPosition(position) {
     else if (dateToday > 5) {
         noWeather.innerHTML = "";
         locationContainerEl.innerHTML = "";
-        noWeather.innerHTML = "Weather is not available beyond 5 days"
+        noWeather.innerHTML = "Weather is not available beyond 5 days";
         return;
     }
     else if (dateToday >= 0) {   
@@ -235,7 +235,15 @@ var loadTimesChart = function() {
 
         //apply color based on time
         var difference = currentTime.diff(moment(), "seconds");
-        if (difference > -1800 && difference < 0) {
+        var dateToday = currentDate.diff(moment().startOf("date"), "days");
+
+        if (dateToday < 0) {
+            $(timeBox).addClass("past_time");
+            $(textBox).addClass("is-danger");
+        } else if (dateToday > 0) {
+            $(timeBox).addClass("future_time");
+            $(textBox).addClass("is-info");
+        } else if (difference > -1800 && difference < 0) {
             $(timeBox).addClass("current_time");
             $(textBox).addClass("is-success");
         } else if (difference < -1800) {
@@ -371,5 +379,3 @@ submitBottom.addEventListener('click', save);
 resetTop.addEventListener('click', reset);
 resetBottom.addEventListener('click', reset);
 //TIMED FUNCTION CALLS//
-
-
