@@ -1,5 +1,8 @@
 //GLOBAL VARIABLES//
 
+//gif search terms
+var searchTerms = ["motivation", "motivational", "workout", "awesome", "strength", "positivity", "hard_work", "you're_great", "forward", "excitement", "fitness", "badass"];
+
 //query selectors
 var dataContainerEl = document.querySelector("#time-blocks");
 var dateContainer = document.getElementById('date');
@@ -23,7 +26,7 @@ var resetBottom = document.getElementById("reset-bottom");
 //locations for getting weather
 var searchedLocationEl = document.querySelector("#searched-location");
 var locationContainerEl = document.querySelector("#location-container");
-var weather = document.getElementById("weather");
+var noWeather = document.getElementById("no-weather");
 
 //start and end time
 var startTime = 6;
@@ -68,15 +71,58 @@ var denullify = function(data) {
     }
 };
 
+//function get gif to display
+var getGif = function() {
+    var index = Math.floor(Math.random()*searchTerms.length);
+    var search = searchTerms[index];
+    var apiUrl = `https://api.giphy.com/v1/gifs/search?q=${search}&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1`;
+    fetch(apiUrl).then(function(response) {
+        return response.json();
+      })
+      .then(function(response) {
+        var gifContainerEl = document.getElementById("gif");
+        gifContainerEl.innerHTML = "";
+
+        var image = document.createElement("img");
+        image.setAttribute('src', response.data[0].images.fixed_height.url);
+        gifContainerEl.appendChild(image);
+      });
+};
+
+// get location's current weather
 function getWeather() {
+
+    noWeather.innerHTML = "";
+    locationContainerEl.innerHTML = "";
+
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-       alert("Weather feature not supported!"); // stuck here on the alert as this isn't showing
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } 
+};
+
+// pass lat/long from getWeather function to fetch request
+function showPosition(position) {
+
+    var dateToday = currentDate.diff(moment().startOf("date"), "days")
+
+    
+
+    // if difference is negative, don't make API call
+    if (dateToday < 0) {
+        noWeather.innerHTML = "";
+        locationContainerEl.innerHTML = "";
+        noWeather.innerHTML = "Previous days' weather is not available"
+        return;
+
+    // if difference is beyond forecast limit, don't make API call    
+    } 
+    else if (dateToday > 5) {
+        noWeather.innerHTML = "";
+        locationContainerEl.innerHTML = "";
+        noWeather.innerHTML = "Weather is not available beyond 5 days"
+        return;
     }
-  }
-  
-  function showPosition(position) {
+    else if (dateToday >= 0) {   
   
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
@@ -85,33 +131,53 @@ function getWeather() {
   
       .then(function(response) {
           return response.json();
-  })
+    })
       .then(function(response) {
           // pass response into dom function
-  
+          
           // current day weather
           var todayCondition = document.createElement("h4");
-          todayCondition.textContent = "Condition: " + response.daily[0].weather[0].description
+          todayCondition.textContent = "Condition: " + response.daily[dateToday].weather[0].description
           locationContainerEl.appendChild(todayCondition);
   
           var todayTemp = document.createElement("h4"); 
-          todayTemp.textContent = "Temperature: " + response.daily[0].temp.day
+          todayTemp.textContent = "Temperature: " + response.daily[dateToday].temp.day
           locationContainerEl.appendChild(todayTemp);
   
           var todayWind = document.createElement("h4");
-          todayWind.textContent = "Wind: " + response.daily[0].wind_speed + " MPH";
+          todayWind.textContent = "Wind: " + response.daily[dateToday].wind_speed + " MPH";
           locationContainerEl.appendChild(todayWind);
   
           var todayHumidity = document.createElement("h4");
-          todayHumidity.textContent = "Humidity: " + response.daily[0].humidity + "%";
+          todayHumidity.textContent = "Humidity: " + response.daily[dateToday].humidity + "%";
           locationContainerEl.appendChild(todayHumidity);
   
           var todayUVIndex = document.createElement("h4");
-          todayUVIndex.textContent = "UV Index: " + response.daily[0].uvi;
+          todayUVIndex.textContent = "UV Index: " + response.daily[dateToday].uvi;
           locationContainerEl.appendChild(todayUVIndex);
       
       });
-  };
+    }
+};
+
+// show error if denial of geolocation request, or other errors
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            noWeather.innerHTML = "User denied the request for Geolocation."
+            break;
+        case error.POSITION_UNAVAILABLE:
+            noWeather.innerHTML = "Location information is unavailable."
+            break;
+        case error.TIMEOUT:
+            noWeather.innerHTML = "The request to get user location timed out."
+            break;
+        case error.UNKNOWN_ERROR:
+            noWeather.innerHTML = "An unknown error occurred."
+            break;
+    }
+};
+
 
 //saves current dataset to localstorage
 var saveData = function() {
@@ -147,7 +213,7 @@ var loadTimesChart = function() {
     //reset html
     dataContainerEl.innerHTML = "";
     //set the starting time
-    var currentTime = moment().day(date).hour(6).minute(0).second(0);
+    var currentTime = moment().date(date).hour(startTime).minute(0).second(0);
     //loop through length and create timeslots
     for (i = 0; i < dataToday.length; i++) {
         //acquire data to display
@@ -164,8 +230,21 @@ var loadTimesChart = function() {
 
         //class elements
         timeSlot.classList = "row";
-        timeBox.classList = "col-sm-1 hour";
-        textBox.classList = "col-sm-11";
+        timeBox.classList = "col-sm-1 hour rounded-pill my-4";
+        textBox.classList = "col-sm-11 textarea";
+
+        //apply color based on time
+        var difference = currentTime.diff(moment(), "seconds");
+        if (difference > -1800 && difference < 0) {
+            $(timeBox).addClass("current_time");
+            $(textBox).addClass("is-success");
+        } else if (difference < -1800) {
+            $(timeBox).addClass("past_time");
+            $(textBox).addClass("is-danger");
+        } else if (difference > 0) {
+            $(timeBox).addClass("future_time");
+            $(textBox).addClass("is-info");
+        }
 
         //add text to elements
         timeBox.textContent = time;
@@ -202,36 +281,40 @@ var loadTodaysPlan = function() {
 function addToDate(){
     dateContainer.textContent= '';
     
-    currentDate = moment(currentDate).add(1,'days');
+    currentDate = moment(currentDate).startOf("date").add(1,'days');
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
 
     loadTimesChart();
     loadTodaysPlan();
+    getWeather();
 }
 
 //subtracts 1 day from currentDate
 function subFromDate(){
     dateContainer.textContent= '';
     
-    currentDate = moment(currentDate).add(-1,'days');
+    currentDate = moment(currentDate).startOf("date").add(-1,'days');
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
 
     loadTimesChart();
     loadTodaysPlan();
+    getWeather();
+
 }
 
 //sets currentDate to today
 function todayDate(){
     dateContainer.textContent= '';
     
-    currentDate = moment();
+    currentDate = moment().startOf("date");
 	dateContainer.textContent =  currentDate.format("MMM Do, YYYY");
     upperDateEl.textContent = currentDate.format("MMM Do, YYYY");
 
     loadTimesChart();
     loadTodaysPlan();
+    getWeather();
 }
 
 //saves all current data to data object, then saves to local storage
@@ -276,6 +359,7 @@ var reset = function() {
 //INITIAL FUNCTION CALLS//
 loadTimesChart();
 loadTodaysPlan();
+getGif();
 
 //EVENT LISTNERS//
 forwardBtn.onclick = addToDate;
